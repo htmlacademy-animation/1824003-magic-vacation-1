@@ -1,3 +1,9 @@
+%active-line {
+  visibility: visible;
+  width: 100%;
+  left: 0;
+}
+
 .page-header {
   position: fixed;
   top: 0;
@@ -241,16 +247,20 @@
     display: block;
     color: inherit;
     padding: 0 0.5em 0.5em;
+    transition: color 0.3s ease, filter 0.3s ease;
 
     &::after {
       content: "";
       position: absolute;
       bottom: 0;
-      width: 100%;
+      width: 0;
       height: 2px;
+      right: 0;
       background-color: $c-light;
-      display: none;
-      left: 0;
+      visibility: hidden;
+      transition-property: opacity, visibility, background-color, width;
+      transition-duration: 0.3s;
+      transition-timing-function: ease;
 
       @media (max-width: $tablet) and (orientation: portrait) {
         left: 0;
@@ -267,7 +277,7 @@
 
     &.active {
       &::after {
-        display: block;
+        @extend %active-line;
       }
     }
 
@@ -277,9 +287,13 @@
       outline: none;
 
       &::after {
-        opacity: 1;
+        @extend %active-line;
         background-color: $c-purple;
       }
+    }
+
+    &:active {
+      filter: brightness(0.9)
     }
   }
 }
